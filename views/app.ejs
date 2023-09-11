@@ -7,7 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Azizs to do list app</h1>     
+    <h1>Azizs to do list app</h1> 
+    <a href="">sing up</a>    
     <!-- ana menu -->
     <!-- <a href="/">take me to home page</a> -->
     <!-- <a href="/create-new-post">create post</a> -->
@@ -16,6 +17,7 @@
         <input type="text" name="title" placeholder="title">
         <input type="text" name="desc" placeholder="description">
         <button>add new post</button>
+        
     </form>
     
     <% if(posts.length > 0) { %>
@@ -23,6 +25,8 @@
             <div>
                 <h2><%= post.title %></h2>
                 <p><%= post.desc %></p>
+                <a href="">done(edit)</a>
+                <a href="">edit</a>
             </div>
             <% }) %>
  
