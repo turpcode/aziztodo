@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Azizs to do list app</h1>     
+    <!-- ana menu -->
+    <!-- <a href="/">take me to home page</a> -->
+    <!-- <a href="/create-new-post">create post</a> -->
+
+    <form method="post" action="submit-new-post">
+        <input type="text" name="title" placeholder="title">
+        <input type="text" name="desc" placeholder="description">
+        <button>add new post</button>
+    </form>
+    
+    <% if(posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+            <div>
+                <h2><%= post.title %></h2>
+                <p><%= post.desc %></p>
+            </div>
+            <% }) %>
+ 
+    <% } else { %>
+        <p>no post here</p>
+    <% } %>
+    
+    
+</body>
+
+</html>
