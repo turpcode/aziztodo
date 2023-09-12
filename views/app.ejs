@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- deneme git hub degisiklikler 2 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -9,32 +8,38 @@
 <body>
     <h1>Azizs to do list app</h1> 
     <a href="">sing up</a>    
-    <!-- ana menu -->
-    <!-- <a href="/">take me to home page</a> -->
-    <!-- <a href="/create-new-post">create post</a> -->
-
     <form method="post" action="submit-new-post">
         <input type="text" name="title" placeholder="title">
         <input type="text" name="desc" placeholder="description">
         <button>add new post</button>
-        
     </form>
-    
-    <% if(posts.length > 0) { %>
-        <% posts.forEach(post => { %>
+    <% if(post.length > 0) { %>
+        <% post.forEach(post => { %>
             <div>
                 <h2><%= post.title %></h2>
                 <p><%= post.desc %></p>
-                <a href="">done(edit)</a>
-                <a href="">edit</a>
+                <!-- <p><%= post.detail %></p> -->
+                <div>
+                    <form method="post" action="/add-detail/<%= post._id %>">
+                        <input type="text" name="detail" placeholder="add more">
+                        <button> + add</button>
+                    </form>
+                    <div>
+                        <% if(post.details.length > 0) { %>
+                            <% post.details.forEach(detail => { %>
+                               <div>
+                                <h5>
+                                    <%= detail.detail  %>
+                                </h5>
+                               </div>
+                                <% }) %>
+                                <% } %>
+                        </div>
+                </div>
             </div>
             <% }) %>
- 
     <% } else { %>
         <p>no post here</p>
     <% } %>
-    
-    
 </body>
-
 </html>
