@@ -1,10 +1,16 @@
 const express =require('express')
 const route = express.Router()
 const postController = require('../controller/postController')
+const authentication = require('../controller/authentication')
 route.get('/',postController.HomePage)
 
-route.get('/create-new-post',postController.CreateNewPostPage) //yeni gonderi olusturmak
-route.post('/submit-new-post',postController.submitPost) //hata kodu
+route.get('/login', authentication.LoginPage);
+route.post('/login-user', authentication.loginUser);
+
+route.post('/signup-user', authentication.registerUser);
+
+route.get('/create-new-post', authentication.isAuth, postController.CreateNewPostPage) //yeni gonderi olusturmak
+route.post('/submit-new-post', authentication.isAuth,postController.submitPost) //hata kodu
 
 module.exports =route
 

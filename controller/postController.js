@@ -12,10 +12,12 @@ const HomePage = (req,res)=>{
     console.log(err)
    })
 }
+
 const CreateNewPostPage = (req,res)=>{ //yeni gonderi olusturur
     res.render('app',{err: ""})
     
 }
+
 const submitPost = (req,res) =>{ //metni gonderme butonu
     if (req.body.title === "" || req.body.desc === "") { //hata kodunda yanlislik var
         res.send("all blanks require")  //hata kodunu duzeltelim
@@ -29,9 +31,17 @@ const submitPost = (req,res) =>{ //metni gonderme butonu
         .catch(err =>{
             console.log(err)
         })
-
     }
 }
+
+fetch('/submit_post', { 
+    method: 'post', 
+    headers: new Headers({
+      'Authorization': YOUR_TOKEN, 
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }), 
+});
+
 module.exports = {
     CreateNewPostPage,
     HomePage,
