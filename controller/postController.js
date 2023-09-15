@@ -34,14 +34,6 @@ const submitPost = (req,res) =>{ //metni gonderme butonu
     }
 }
 
-fetch('/submit_post', { 
-    method: 'post', 
-    headers: new Headers({
-      'Authorization': YOUR_TOKEN, 
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }), 
-});
-
 module.exports = {
     CreateNewPostPage,
     HomePage,

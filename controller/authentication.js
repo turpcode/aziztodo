@@ -13,29 +13,28 @@ const LoginPage = (req, res)=>{ //yeni gonderi olusturur
     res.render('login',{err: ""})
 }
 
+const SignUpPage = (req, res) => {
+    res.render('signup',{err: ""})
+}
 // Controllers
 const isAuth = (req, res, next) => {
-    const authHeader = req.headers['authorization']; // Header cekildi
-    const token = authHeader && authHeader.split(' ')[1]; // Baerer [token] texti bolunup token alindi
-
-    if (token == null)  return res.sendStatus(401);
+    const token = req.cookies.token; // [token] texti bolunup token alindi
+    if (token == undefined || token == null || token == '') return res.redirect('/login');
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        console.log(err);
-        if (err) return res.status(403);
+        if (err) return res.status(403).json({ status: 'Rejected', message: 'JWT Error!'});
 
         req.user = user;
         next();
-    })
+    });
 }
 
 const registerUser = async (req, res) => {
-    try {
-        const { firstName, LastName, email, password  } = req.body;
+    const { firstName, LastName, email, password  } = req.body;
         console.log(req.body)
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password, salt);
-
+        
         const user = new User({
             name: firstName,
             lastName: LastName,
@@ -45,11 +44,7 @@ const registerUser = async (req, res) => {
 
         await user.save();
         
-        res.status(200).json({ status: 'Accepted', message: 'Kayit Basarili!'});
-    } catch(err) {
-        console.log(err)
-        res.status(500).json({ status: 'Accepted', message: 'Islem Basarisiz'});
-    }
+        return res.redirect('/login');
 }
 
 const loginUser = async (req, res) => {
@@ -60,24 +55,33 @@ const loginUser = async (req, res) => {
             email: email
         });
 
-        if(!user) return res.status(400).json({ status: 'Accepted', message: 'Kullanici bulunamadi!'});
+        if(!user) return res.redirect('/register');
         
         const isMatch = await bcrypt.compare(password, user.password);
         
-        if(!isMatch) return res.status(400).json({ status: 'Accepted', message: 'Sifre Yanlis!'});
+        if(!isMatch) return res.redirect('/login');
         
         const token = generateToken({id: user.id});
-        console.log('Token: ', token);
-        return res.send({token})
+
+        res.cookie('token', token);
+
+        return res.redirect('/');
     } catch(err) {
         console.log(err)
-        return res.status(500).json(err)
+        return res.status(500).json(err);
     }
+}
+
+const logoutUser = (req, res) => {
+    res.clearCookie('token');
+    return res.redirect('/login');
 }
 
 module.exports = {
     isAuth,
     registerUser,
     LoginPage,
-    loginUser
+    loginUser,
+    logoutUser,
+    SignUpPage
 }
