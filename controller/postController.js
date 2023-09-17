@@ -16,12 +16,8 @@ const HomePage = (req, res) => {
         })
 
 }
-<<<<<<< HEAD
-const CreateNewPostPage = (req, res) => { //yeni gonderi olusturur
-    res.render('app', { err: "required" })
 
 
-}
 const submitPost = (req, res) => { //metni gonderme butonu
     if (req.body.title === "" || req.body.desc === "") {
         return;
@@ -34,42 +30,37 @@ const submitPost = (req, res) => { //metni gonderme butonu
             .catch(err => {
                 console.log(err)
             })
-
-=======
-
-const CreateNewPostPage = (req,res)=>{ //yeni gonderi olusturur
-    res.render('app',{err: ""})
-    
-}
-
-const submitPost = (req,res) =>{ //metni gonderme butonu
-    if (req.body.title === "" || req.body.desc === "") { //hata kodunda yanlislik var
-        res.send("all blanks require")  //hata kodunu duzeltelim
-                                        //bos gonderi olusturulabiliyor
-    }else{
-        let newPost = new postModel(req.body)
-        newPost.save()
-        .then(()=>{
-            res.redirect('/')
-        })
-        .catch(err =>{
-            console.log(err)
-        })
->>>>>>> 8d6e040e34656a43480b7729fcb618036df03597
     }
 }
 
-fetch('/submit_post', { 
-    method: 'post', 
+
+
+const CreateNewPostPage = (req, res) => { //yeni gonderi olusturur
+    res.render('app', { err: "" })
+
+}
+
+
+fetch('/submit_post', {
+    method: 'post',
     headers: new Headers({
-      'Authorization': YOUR_TOKEN, 
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }), 
+         'Authorization': YOUR_TOKEN,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }),
 });
 
+const deletePost= (req,res) => {
+    postlModel.findByIdAndDelete(req.param.id)
+    .then(() =>{
+        res.redirect("/")
+    })
+    .catch((err => {
+        console.log(err)
+    }))
+    }
 module.exports = {
     CreateNewPostPage,
     HomePage,
     submitPost,
+    deletePost
 }
-

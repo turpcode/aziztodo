@@ -97,7 +97,7 @@
                     <input type="text" name="desc" placeholder="description">
                     
 
-                        <button>add new post</button>
+                        <button>➕</button>
                     
                     
                 </form>
@@ -107,7 +107,7 @@
         <% post.forEach(post=> { %>
             <div class="task">
                 <div class="hea-of-task">
-
+                    <a href="/delete-post/<%= post._id %>">❌</a>
                     <h2>
                         <%= post.title %>
                     </h2>
@@ -122,7 +122,7 @@
 
                         <form method="post" action="/add-detail/<%= post._id %>">
                             <input type="text" name="detail" placeholder="add more">
-                            <button> + add</button>
+                            <button> ➕</button>
                         </form>
                     </div>
                     <div>
@@ -135,6 +135,9 @@
                                             <h6>
                                                 <%= detail.detail %>
                                             </h6>
+                                            <button>
+                                                <a href="/delete-detail/<%= detail._id %>">✅</a>
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>

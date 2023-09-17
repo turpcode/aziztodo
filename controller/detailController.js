@@ -49,10 +49,18 @@ function updatePostData(postId,detailId,res){
         // res.redirect('/')
      
 }
-
+const deleteDetail= (req,res) => {
+    detailModel.findByIdAndDelete(req.param.id)
+    .then(() =>{
+        res.redirect("/")
+    })
+    .catch((err => {
+        console.log(err)
+    }))
+    }
 
 module.exports = {
     addDetail,
-    
+    deleteDetail,
     
 }
